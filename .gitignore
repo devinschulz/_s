@@ -85,3 +85,6 @@ wp-config.php
 /js/scripts.js
 
 /vendors/
+
+/css/main.css
+/css/main.css.map
