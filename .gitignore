@@ -79,3 +79,9 @@ sitemap.xml.gz
 wp-config.php
 
 /node_modules/
+
+/js/libs/
+/js/plugins.js
+/js/scripts.js
+
+/vendors/
