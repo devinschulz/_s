@@ -1,0 +1,30 @@
+{
+  "name": "_s",
+  "version": "0.0.0",
+  "homepage": "https://github.com/iDevSchulz/_s",
+  "authors": [
+    "Devin Schulz"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  },
+  "overrides": {
+    "jquery": {
+      "development": "dist/jquery.min.js"
+    }
+  },
+  "devDependencies": {
+    "bourbon": "~4.0.2",
+    "neat": "~1.6.0",
+    "normalize-scss": "~3.0.1"
+  }
+}
