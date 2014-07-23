@@ -1,11 +1,13 @@
 gulp = require 'gulp'
-$ = require('gulp-load-plugins')()
+$ = require('gulp-load-plugins')({ camelize: true })
 bower = require 'main-bower-files'
 spritesmith = require 'gulp.spritesmith'
 ignore = require 'gulp-ignore'
 pngcrush = require 'imagemin-pngcrush'
 args = require('yargs').argv
 path = require 'path'
+lr = require 'tiny-lr'
+server = lr()
 
 # Environments
 # To change environment add the --environment=production argument
@@ -14,17 +16,18 @@ PRODUCTION = 'production'
 
 config =
   environment : args.environment || DEVELOPMENT
-  sass_path: 'css/sass/'
-  css_path: 'css/'
-  coffee_path: 'js/coffee/'
-  js_path: 'js/'
-  libs_path: 'js/libs/'
-  images_path: 'images/'
+  sass_path: 'assets/css/sass/'
+  css_path: 'assets/css/'
+  coffee_path: 'assets/js/coffee/'
+  js_path: 'assets/js/'
+  libs_path: 'assets/js/libs/'
+  images_path: 'assets/images/'
   sass_includes: [
     'vendors/bourbon/dist/bourbon.scss'
     'vendors/neat/app/assets/stylesheets/neat.scss'
     'vendors/normalize-scss/normalize.scss'
-  ]
+  ],
+  port: 1337
 
 # Prepend sass path to includes
 config.sass_includes.unshift(config.sass_path)
@@ -56,6 +59,7 @@ gulp.task('styles', ->
         autoprefixer: ['last 4 versions', 'ie 8', 'ie 9', '> 5%']
       optimizers:
         minifier: if config.environment is PRODUCTION then true else false
+      sourcemap: true
     }))
     .pipe($.if(config.environment is PRODUCTION, $.combineMediaQueries({
       log: true
@@ -67,7 +71,7 @@ gulp.task('styles', ->
     })))
     .pipe($.if(config.environment is PRODUCTION, $.cssshrink()))
     .pipe(gulp.dest(config.css_path))
-    .pipe($.livereload())
+    .pipe($.livereload(server))
 )
 
 # Scripts
@@ -81,19 +85,27 @@ gulp.task 'scripts', ->
     .pipe($.coffee())
     .pipe($.if(config.environment is PRODUCTION, $.uglify()))
     .pipe(gulp.dest(config.js_path))
-    .pipe($.livereload())
+    .pipe($.livereload(server))
+
+gulp.task 'gulplint', ->
+  return gulp.src('./gulpfile.coffee')
+    .pipe($.plumber({
+      errorHandler: onError
+    }))
+    .pipe($.coffeelint('./coffeelint.json'))
+    .pipe($.coffeelint.reporter())
 
 # Vendors
 gulp.task 'bower', ->
   return gulp.src(bower())
-    .pipe(gulp.dest('./js/libs'))
+    .pipe(gulp.dest(config.libs_path))
 
 gulp.task 'vendors', ['bower'], ->
   return gulp.src(config.libs_path + '*.js')
     .pipe($.concat('plugins.js'))
     .pipe($.if(config.environment is PRODUCTION, $.uglify()))
     .pipe(gulp.dest(config.js_path))
-    .pipe($.livereload())
+    .pipe($.livereload(server))
 
 # Images
 gulp.task 'images', ->
@@ -101,13 +113,14 @@ gulp.task 'images', ->
     .pipe($.plumber({
       errorHandler: onError
     }))
-    .pipe($.imagemin({
+    .pipe($.cache($.imagemin({
+      interlaced: true
       progressive: true
       svgoPlugins: [{ removeViewBox: false }]
       use: [pngcrush()]
-    }))
+    })))
     .pipe(gulp.dest(config.images_path))
-    .pipe($.livereload())
+    .pipe($.livereload(server))
 
 gulp.task 'sprite', ['clean'], ->
   spriteData = gulp.src('./images/sprite/*.png')
@@ -120,18 +133,21 @@ gulp.task 'sprite', ['clean'], ->
       algorithm: 'binary-tree'
       cssFormat: 'scss'
     }))
-  spriteData.img.pipe(gulp.dest('./images'))
-  spriteData.css.pipe(gulp.dest('./css/scss/modules'))
+  spriteData.img.pipe(gulp.dest(config.images_path))
+  spriteData.css.pipe(gulp.dest(config.sass_path + '/modules'))
 
 gulp.task 'clean', ->
-  return gulp.src('./images/sprite.png', { read: false })
+  return gulp.src(config.images_path + '/sprite.png', { read: false })
     .pipe($.rimraft())
 
-gulp.task 'default', ['build'], ->
-  gulp.watch('css/sass/**/*.scss', ['styles'])
-  gulp.watch('js/coffee/*.coffee', ['scripts'])
-  gulp.watch('images/sprite/*.png', ['sprite'])
-  gulp.watch('images/*.{jpg, png, svg}', ['sprite'])
+gulp.task 'default', ['gulplint', 'build'], ->
+  server.listen(config.port, (err) ->
+    if err then console.log(err)
+    gulp.watch(config.sass_path + '/**/*.scss', ['styles'])
+    gulp.watch(config.coffee_path + '/*.coffee', ['scripts'])
+    gulp.watch(config.images_path + '/sprite/*.png', ['sprite'])
+    gulp.watch(config.images_path + '/*.{jpg, png, svg}', ['sprite'])
+  )
 
 gulp.task 'build', [
   'styles'
