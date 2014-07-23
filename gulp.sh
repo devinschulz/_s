@@ -21,4 +21,6 @@ if [ ! -d vendors ];
     bower install
 fi
 
+echo "Everything looks good, running Gulp!"
+
 gulp
