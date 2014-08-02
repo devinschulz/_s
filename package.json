@@ -39,6 +39,7 @@
     "gulp-scss-lint": "latest",
     "gulp-spritesmith": "latest",
     "gulp-uglify": "latest",
+    "gulp-util": "^3.0.0",
     "gulp-watch": "latest",
     "gulp.spritesmith": "latest",
     "imagemin-pngcrush": "latest",

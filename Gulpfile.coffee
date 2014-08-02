@@ -37,7 +37,7 @@ config.sass_includes = config.sass_includes.map (includePath) ->
   path.join process.cwd(), includePath
 
 onError = (err) ->
-  $.gutil.beep()
+  $.util.beep()
   console.log err
   $.notify().write(err)
 
