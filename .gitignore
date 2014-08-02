@@ -80,11 +80,11 @@ wp-config.php
 
 /node_modules/
 
-/js/libs/
-/js/plugins.js
-/js/scripts.js
+assets/js/libs/
+assets/js/plugins.js
+assets/js/scripts.js
 
 /vendors/
 
-/css/main.css
-/css/main.css.map
+assets/css/main.css
+assets/css/main.css.map
