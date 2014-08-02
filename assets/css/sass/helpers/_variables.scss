@@ -1,19 +1,44 @@
+// Default Window Widths
+$widths: (
+  mobile: 320,
+  mobile-landscape: 480,
+  tablet: 768,
+  desktop: 1000,
+  super: 1120
+);
+
+// Set the breakpoints for Neat
+// Convert Default Window Widths to Em's
+// Use: @include media(map_get($breakpoint, desktop)) {}
+$breakpoint: (
+  mobile: new-breakpoint(em(map_get($widths, mobile)), 4),
+  mobile-landscape: new-breakpoint(em(map_get($widths, mobile-landscape)), 6),
+  tablet: new-breakpoint(em(map_get($widths, tablet)), 6),
+  desktop: new-breakpoint(em(map_get($widths, desktop)), 12),
+  super: new-breakpoint(em(map_get($widths, super)), 16),
+);
+
+// Neat Overrides
+$grid-columns: 4;
+$max-width: em(map_get($widths, super));
+
+// Sassline
 
 // Breakpoint sizes in ems. Add more values here to add more breakpoints.
 // Change names if you prefer, it wont break the mixin as long as they are strings not just numbers.
 // Note: not relative to root font-size.
 $breakpoints: (
-  break-0: 0,     // 0px       Mobile first
-  break-1: 640,   // 640px   ~ Small tablet up
-  break-2: 800,   // 800px   ~ Large tablet up
-  break-3: 1024,  // 1024px  ~ Desktop up
-  break-4: 1600   // 1600px  ~ Large desktop up
+  break-0: 0,
+  break-1: map_get($widths, mobile-landscape),
+  break-2: map_get($widths, tablet),
+  break-3: map_get($widths, desktop),
+  break-4: map_get($widths, super)
 );
 
 // Root font-sizes for each breakpoint. Set to half desired line-height of body text.
 // ! Make sure to have as many sizes as breakpoints above.
 $rootsizes: (
-  rootsize-0: 12,   // 24px line-height body text
+  rootsize-0: 13,   // 24px line-height body text
   rootsize-1: 14,   // 28px line-height body text
   rootsize-2: 15,   // 30px line-height body text
   rootsize-3: 17,   // 34px line-height body text
@@ -43,7 +68,7 @@ $bodytype: (
 );
 
 $headingtype: (
-  font-family: 'Helvetica, sans-serif',
+  font-family: $helvetica,
   regular: 400,
   bold: 700,
   cap-height: 0.65
