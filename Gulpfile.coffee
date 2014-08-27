@@ -91,16 +91,19 @@ gulp.task 'gulplint', ->
     .pipe $.coffeelint.reporter()
 
 # Vendors
-gulp.task 'bower', ->
-  return gulp.src bower()
-    .pipe gulp.dest config.libs_path
+files = [
 
-gulp.task 'vendors', ['bower'], ->
+]
+
+gulp.task 'move', ->
+  gulp.src files
+  .pipe gulp.dest config.libs_path
+
+gulp.task 'vendors', ['move'], ->
   return gulp.src(config.libs_path + '*.js')
-    .pipe $.concat('plugins.js')
-    .pipe $.if config.environment is PRODUCTION, $.uglify()
-    .pipe gulp.dest config.js_path
-    .pipe $.livereload(server)
+  .pipe $.concat('plugins.js')
+  .pipe $.if config.environment is PRODUCTION, $.uglify()
+  .pipe gulp.dest config.js_path
 
 # Images
 gulp.task 'images', ->
