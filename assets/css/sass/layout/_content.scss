@@ -1,7 +1,14 @@
 .container {
   @include outer-container();
+  padding: 0 rem(10);
 }
 
 .row {
   @extend %row;
+}
+
+@include media(map_get($breakpoint, desktop)) {
+  .container {
+    padding: 0;
+  }
 }
