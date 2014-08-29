@@ -4,8 +4,6 @@ ignore = require 'gulp-ignore'
 pngcrush = require 'imagemin-pngcrush'
 args = require('yargs').argv
 path = require 'path'
-lr = require 'tiny-lr'
-server = lr()
 
 # Environments
 # To change environment add the --env=prod argument
@@ -97,7 +95,7 @@ gulp.task('styles', ->
     .pipe $.if config.environment is PRODUCTION, $.cssshrink()
     .pipe $.header header
     .pipe gulp.dest config.root
-    .pipe $.livereload(server)
+    .pipe $.livereload()
 )
 
 # Scripts
@@ -111,7 +109,7 @@ gulp.task 'scripts', ->
       bare: true
     .pipe $.if config.environment is PRODUCTION, $.uglify()
     .pipe gulp.dest config.js_path
-    .pipe $.livereload(server)
+    .pipe $.livereload()
 
 gulp.task 'gulplint', ->
   gulp.src './gulpfile.coffee'
@@ -149,15 +147,15 @@ gulp.task 'images', ->
       use:
         pngcrush()
     .pipe gulp.dest config.images_path
-    .pipe $.livereload(server)
+    .pipe $.livereload()
 
 gulp.task 'default', ['gulplint', 'build'], ->
-  server.listen config.port, (err) ->
-    if err then console.log(err)
-    gulp.watch config.sass_path + '/**/*.scss', ['styles']
-    gulp.watch config.coffee_path + '/*.coffee', ['scripts']
-    gulp.watch config.images_path + '/sprite/*.png', ['sprite']
-    gulp.watch config.images_path + '/*.{jpg, png, svg}', ['sprite']
+  $.livereload.listen()
+  gulp.watch config.sass_path + '**/*.scss', ['styles']
+  gulp.watch config.coffee_path + '*.coffee', ['scripts']
+  gulp.watch config.images_path + '*.{jpg, png, svg}', ['images']
+  gulp.watch(config.root + '**/*.php').on 'change', (file) ->
+    $.livereload().changed(file.path)
 
 gulp.task 'build', [
   'styles'

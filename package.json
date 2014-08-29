@@ -47,10 +47,7 @@
     "node-sass-middleware": "latest",
     "object-assign": "latest",
     "path": "latest",
-    "tiny-lr": "latest",
     "yargs": "latest"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
