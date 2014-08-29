@@ -87,3 +87,55 @@ function _s_setup_author() {
 	}
 }
 add_action( 'wp', '_s_setup_author' );
+
+/**
+ * Add Slug to Body Class
+ *
+ * @param $classes
+ *
+ * @return array
+ */
+function _s_add_slug_to_body_class($classes) {
+	global $post;
+	if (is_home()) {
+		$key = array_search('blog', $classes);
+		if ($key > -1) {
+			unset($classes[$key]);
+		}
+	} elseif (is_page()) {
+		$classes[] = sanitize_html_class($post->post_name);
+	} elseif (is_singular()) {
+		$classes[] = sanitize_html_class($post->post_name);
+	}
+
+	return $classes;
+}
+
+add_filter('body_class', '_s_add_slug_to_body_class');
+
+/**
+ * Remove <p> tags from embedded images in posts
+ *
+ * @param $content
+ *
+ * @return mixed
+ */
+function _s_remove_img_ptags($content){
+	return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
+}
+add_filter('the_content', '_s_remove_img_ptags');
+
+/**
+ * Call Googles HTML5 Shim, but only for users on old versions of IE
+ */
+function _s_IEhtml5_shim () {
+	global $is_IE;
+	if ($is_IE)
+		echo '<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->';
+}
+add_action('wp_head', '_s_IEhtml5_shim');
+
+/**
+ * Remove the version number of WP
+ */
+remove_action('wp_head', 'wp_generator');
