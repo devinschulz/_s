@@ -2,7 +2,7 @@
 /**
  * The Header for our theme.
  *
- * Displays all of the <head> section and everything up till <div id="content">
+ * Displays all of the <head> section and everything up till <div class="site__content">
  *
  * @package _s
  */
@@ -19,20 +19,17 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
+<div class="site">
 
-	<header id="masthead" class="site-header" role="banner">
-		<div class="site-branding">
-			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+	<header class="site__header">
+		<div class="site__branding">
+			<h1 class="site__title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+			<h2 class="site__description"><?php bloginfo( 'description' ); ?></h2>
 		</div>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle"><?php _e( 'Primary Menu', '_s' ); ?></button>
-			<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', '_s' ); ?></a>
-
+		<nav class="site__navigation site__navigation--primary" role="navigation">
 			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
+		</nav>
+	</header>
 
-	<div id="content" class="site-content">
+	<div class="site__content">
