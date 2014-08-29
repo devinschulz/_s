@@ -11,7 +11,9 @@
 	</div><?php // .site__content ?>
 
 	<footer class="site__footer" role="contentinfo">
-		<p><small>Copyright &copy; <?php echo date('Y'); ?> <?php bloginfo('title'); ?></small></p>
+		<div class="container">
+			<p><small>Copyright &copy; <?php echo date('Y'); ?> <?php bloginfo('title'); ?></small></p>
+		</div>
 	</footer>
 
 </div>

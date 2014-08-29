@@ -23,14 +23,16 @@
 <div class="site">
 
 	<header class="site__header">
-		<div class="site__branding">
-			<h1 class="site__title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site__description"><?php bloginfo( 'description' ); ?></h2>
-		</div>
+		<div class="container">
+			<div class="site__branding">
+				<h1 class="site__title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+				<h2 class="site__description"><?php bloginfo( 'description' ); ?></h2>
+			</div>
 
-		<nav class="site__navigation site__navigation--primary" role="navigation">
-			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-		</nav>
+			<nav class="site__navigation site__navigation--primary" role="navigation">
+				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+			</nav>
+		</div>
 	</header>
 
-	<div class="site__content">
+	<div class="site__content container">
