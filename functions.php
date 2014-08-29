@@ -30,7 +30,7 @@ function _s_setup() {
 	 * Enable support for Post Thumbnails on posts and pages.
 	 *
 	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
-	 */
+	*/
 	//add_theme_support( 'post-thumbnails' );
 
 	// This theme uses wp_nav_menu() in one location.
@@ -86,14 +86,22 @@ function _s_scripts() {
 
 	wp_enqueue_style( '_s-style', get_stylesheet_uri() );
 
-	wp_enqueue_script('_s-plugins', $assets_dir . 'js/plugins.js', array(), null, true);
-	wp_enqueue_script('_s-scripts', $assets_dir . 'js/scripts.js', array('_s-plugins'), null, true);
+	wp_enqueue_script('_s-plugins', $assets_dir . 'js/plugins.js', array('jquery'), null, true);
+	wp_enqueue_script('_s-scripts', $assets_dir . 'js/scripts.js', array('jquery', '_s-plugins'), null, true);
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', '_s_scripts' );
+
+function jquery() {
+	wp_deregister_script('jquery');
+	wp_register_script('jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", false, null);
+	wp_enqueue_script('jquery');
+}
+
+if (!is_admin()) add_action("wp_enqueue_scripts", "jquery", 11);
 
 /**
  * Implement the Custom Header feature.
