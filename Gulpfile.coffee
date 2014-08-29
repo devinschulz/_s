@@ -10,12 +10,12 @@ lr = require 'tiny-lr'
 server = lr()
 
 # Environments
-# To change environment add the --environment=production argument
-DEVELOPMENT = 'development'
-PRODUCTION = 'production'
+# To change environment add the --env=prod argument
+DEVELOPMENT = 'dev'
+PRODUCTION = 'prod'
 
 config =
-  environment : args.environment || DEVELOPMENT
+  environment : args.env || DEVELOPMENT
   sass_path: 'assets/css/sass/'
   css_path: 'assets/css/'
   coffee_path: 'assets/js/coffee/'
