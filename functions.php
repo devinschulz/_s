@@ -133,3 +133,7 @@ require get_template_directory() . '/inc/jetpack.php';
  */
 require get_template_directory() . '/inc/acf.php';
 
+/**
+ * Custom Post Types and Taxonomies
+ */
+require get_template_directory() . '/inc/custom-post-types.php';
