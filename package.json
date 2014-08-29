@@ -38,18 +38,19 @@
     "gulp-rimraf": "latest",
     "gulp-ruby-sass": "latest",
     "gulp-scss-lint": "latest",
-    "gulp-spritesmith": "latest",
     "gulp-uglify": "latest",
-    "gulp-util": "^3.0.0",
+    "gulp-util": "latest",
     "gulp-watch": "latest",
     "gulp.spritesmith": "latest",
     "imagemin-pngcrush": "latest",
-    "main-bower-files": "latest",
     "node-sass": "latest",
     "node-sass-middleware": "latest",
     "object-assign": "latest",
     "path": "latest",
     "tiny-lr": "latest",
     "yargs": "latest"
+  },
+  "dependencies": {
+
   }
 }
