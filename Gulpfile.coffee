@@ -96,8 +96,9 @@ files = [
 ]
 
 gulp.task 'move', ->
-  gulp.src files
-  .pipe gulp.dest config.libs_path
+  if files.length
+    gulp.src files
+    .pipe gulp.dest config.libs_path
 
 gulp.task 'vendors', ['move'], ->
   return gulp.src(config.libs_path + '*.js')
