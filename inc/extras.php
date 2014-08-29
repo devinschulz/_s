@@ -139,3 +139,24 @@ add_action('wp_head', '_s_IEhtml5_shim');
  * Remove the version number of WP
  */
 remove_action('wp_head', 'wp_generator');
+
+/**
+ * Enable Hidden Admin Feature displaying ALL Site Settings
+ */
+global $user_login;
+get_currentuserinfo();
+
+function all_settings_link() {
+	add_options_page(__('All Settings'), __('All Settings'), 'administrator', 'options.php');
+}
+if (is_admin()) {
+	add_action( 'admin_menu', 'all_settings_link' );
+}
+
+/**
+ * Remove Wordpress Update Notifications for all users except Admin
+ */
+if (!current_user_can('update_plugins')) { // checks to see if current user can update plugins
+	add_action( 'init', create_function( '$a', "remove_action( 'init', 'wp_version_check' );" ), 2 );
+	add_filter( 'pre_option_update_core', create_function( '$a', "return null;" ) );
+}
