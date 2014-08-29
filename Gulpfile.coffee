@@ -26,7 +26,7 @@ config =
     'vendors/neat/app/assets/stylesheets/neat.scss'
     'vendors/normalize-scss/normalize.scss'
   ],
-  port: 1337
+  port: 35729
 
 # Prepend sass path to includes
 config.sass_includes.unshift config.sass_path
