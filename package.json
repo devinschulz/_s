@@ -26,6 +26,7 @@
     "gulp-concat": "latest",
     "gulp-csscomb": "latest",
     "gulp-cssshrink": "latest",
+    "gulp-header": "^1.0.5",
     "gulp-if": "latest",
     "gulp-ignore": "latest",
     "gulp-imagemin": "latest",
