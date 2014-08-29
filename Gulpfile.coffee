@@ -45,7 +45,6 @@ onError = (err) ->
 # Styles
 border = (item) ->
   borderArray = []
-  console.log item.length
   i = 0
   while i < item.length
     borderArray.push('#')
@@ -110,7 +109,8 @@ gulp.task 'scripts', ->
       errorHandler: onError
     .pipe $.coffeelint()
     .pipe $.coffeelint.reporter()
-    .pipe $.coffee()
+    .pipe $.coffee
+      bare: true
     .pipe $.if config.environment is PRODUCTION, $.uglify()
     .pipe gulp.dest config.js_path
     .pipe $.livereload(server)
