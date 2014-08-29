@@ -21,6 +21,23 @@ if [ ! -d vendors ];
     bower install
 fi
 
+if [ ! -d assets/images/sprite ];
+  then
+    echo "Creating Directories"
+    cd assets
+    if [ ! -d assets/images ];
+      then
+        echo "Creating Images Directory"
+        mkdir images
+    fi
+    if [ ! -d assets/images/sprite ];
+      then
+        echo "Creating Sprite Directory"
+        cd images
+        mkdir sprite
+    fi
+fi
+
 echo "Everything looks good, running Gulp!"
 
 gulp
