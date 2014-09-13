@@ -3,7 +3,7 @@ $widths: (
   mobile: 320,
   mobile-landscape: 480,
   tablet: 768,
-  desktop: 1000,
+  desktop: 960,
   super: 1120
 );
 
@@ -20,7 +20,7 @@ $breakpoint: (
 
 // Neat Overrides
 $grid-columns: 4;
-$max-width: em(map_get($widths, super));
+$max-width: unquote(map_get($widths, desktop) + 'px');
 
 // Sassline
 
