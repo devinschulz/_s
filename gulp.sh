@@ -8,6 +8,18 @@ if [ ! gem spec sass > /dev/null 2>&1 && ! gem spec scss-lint > /dev/null 2>&1 ]
     bundle install
 fi
 
+node=`which node 2>&1`
+if [ $? -ne 0 ]; then
+  echo "Please install NodeJS."
+  echo "http://nodejs.org/"
+  exit 1
+fi
+
+npm=`which npm 2>&1`
+if [ $? -ne 0 ]; then
+  echo "Please install NPM."
+fi
+
 if [ ! -d node_modules ];
   then
     echo "Installing Dependencies"
